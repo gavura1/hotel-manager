@@ -10,8 +10,8 @@ import java.time.LocalDate;
 public class BookingRequestDto {
 
     private Long roomId;
-    private LocalDate checkIn;
-    private LocalDate checkOut;
+    private LocalDate fromDate;
+    private LocalDate toDate;
     private String guestName;
     private String note;
 }

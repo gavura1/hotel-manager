@@ -48,6 +48,8 @@ public class Booking {
     @Column(name = "total_price", nullable = false)
     private BigDecimal totalPrice;
 
+    private String note;
+
 
     @PrePersist
     protected void onCreate(){
