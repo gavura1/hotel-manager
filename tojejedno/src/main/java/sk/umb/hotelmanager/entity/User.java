@@ -20,11 +20,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "google_id", nullable = false,unique = true)
+    @Column(name = "google_id", unique = true)
     private String googleId;
 
     @Column(unique = true, nullable = false)
     private String email;
+
+    @Column(nullable = false)
+    private String password;
 
     @Column(nullable = false)
     private String name;
@@ -39,6 +42,9 @@ public class User {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;
+
+    @OneToMany(mappedBy = "manager")
+    private List<Hotel> hotels;
 
     @OneToMany(mappedBy = "user")
     private List<Booking> bookings;
