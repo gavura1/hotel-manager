@@ -2,8 +2,10 @@ package sk.umb.hotelmanager.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import sk.umb.hotelmanager.dto.BookingRequestDto;
 import sk.umb.hotelmanager.dto.BookingResponseDto;
 import sk.umb.hotelmanager.entity.Booking;
+import sk.umb.hotelmanager.entity.Room;
 import sk.umb.hotelmanager.repository.BookingRepository;
 import sk.umb.hotelmanager.repository.HotelRepository;
 import sk.umb.hotelmanager.repository.RoomRepository;
@@ -38,6 +40,13 @@ public class BookingService {
                 ("Rezervácia s  týmto id sa nenašla"));
 
         return mapToResponseDto(booking);
+    }
+
+    public BookingResponseDto createBooking(BookingRequestDto requestDto) {
+
+        Room room = roomRepository.findById(requestDto.getRoomId()).orElseThrow(() -> new RuntimeException("Izba s daným id sa nenašla"));
+
+
     }
 
 
