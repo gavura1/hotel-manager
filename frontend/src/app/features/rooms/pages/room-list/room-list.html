@@ -1,1 +1,113 @@
-<p>room-list works!</p>
+<div class="list-container">
+
+  <!-- MOD 1: ZOZNAM HOTELOV -->
+  <ng-container *ngIf="!hotelId">
+
+    <div class="list-header">
+      <h2>Vyberte hotel</h2>
+    </div>
+
+    <table mat-table [dataSource]="hotelDataSource" class="mat-elevation-z2">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let hotel">{{ hotel.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Názov</th>
+        <td mat-cell *matCellDef="let hotel">{{ hotel.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef>Adresa</th>
+        <td mat-cell *matCellDef="let hotel">{{ hotel.address }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Popis</th>
+        <td mat-cell *matCellDef="let hotel">{{ hotel.description }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let hotel">
+          <button mat-raised-button color="primary"
+                  [routerLink]="['/izby', hotel.id]">
+            Spravovať izby
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="hotelColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: hotelColumns"></tr>
+
+    </table>
+
+  </ng-container>
+
+  <!-- MOD 2: ZOZNAM IZIEB HOTELA -->
+  <ng-container *ngIf="hotelId">
+
+    <div class="list-header">
+      <h2>Izby hotela</h2>
+      <div class="header-actions">
+        <button mat-button [routerLink]="['/izby']">
+          ← Späť na hotely
+        </button>
+        <button mat-raised-button color="primary"
+                [routerLink]="['/izby', hotelId, 'vytvorit']">
+          Pridať izbu
+        </button>
+      </div>
+    </div>
+
+    <table mat-table [dataSource]="roomDataSource" class="mat-elevation-z2">
+
+      <ng-container matColumnDef="roomNumber">
+        <th mat-header-cell *matHeaderCellDef>Číslo izby</th>
+        <td mat-cell *matCellDef="let room">{{ room.roomNumber }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="roomType">
+        <th mat-header-cell *matHeaderCellDef>Typ</th>
+        <td mat-cell *matCellDef="let room">{{ getRoomTypeLabel(room.roomType) }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="roomStatus">
+        <th mat-header-cell *matHeaderCellDef>Stav</th>
+        <td mat-cell *matCellDef="let room">{{ getRoomStatusLabel(room.roomStatus) }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="pricePerNight">
+        <th mat-header-cell *matHeaderCellDef>Cena/noc</th>
+        <td mat-cell *matCellDef="let room">{{ room.pricePerNight }} €</td>
+      </ng-container>
+
+      <ng-container matColumnDef="capacity">
+        <th mat-header-cell *matHeaderCellDef>Kapacita</th>
+        <td mat-cell *matCellDef="let room">{{ room.capacity }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let room">
+          <button mat-button color="primary"
+                  [routerLink]="['/izby', hotelId, 'upravit', room.id]">
+            Upraviť
+          </button>
+          <button mat-button color="warn"
+                  (click)="deleteRoom(room.id!)">
+            Vymazať
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="roomColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: roomColumns"></tr>
+
+    </table>
+
+  </ng-container>
+
+</div>

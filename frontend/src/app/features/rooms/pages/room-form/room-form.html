@@ -1,1 +1,51 @@
-<p>room-form works!</p>
+<div class="form-container">
+
+  <h2>{{ isEditMode ? 'Úprava izby' : 'Pridať izbu' }}</h2>
+
+  <form [formGroup]="roomForm" (ngSubmit)="onSubmit()">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Číslo izby</mat-label>
+      <input matInput formControlName="roomNumber">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Typ izby</mat-label>
+      <mat-select formControlName="roomType">
+        <mat-option *ngFor="let option of roomTypeOptions" [value]="option[0]">
+          {{ option[1] }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Stav izby</mat-label>
+      <mat-select formControlName="roomStatus">
+        <mat-option *ngFor="let option of roomStatusOptions" [value]="option[0]">
+          {{ option[1] }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Cena za noc (€)</mat-label>
+      <input matInput type="number" formControlName="pricePerNight">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Kapacita (počet osôb)</mat-label>
+      <input matInput type="number" formControlName="capacity">
+    </mat-form-field>
+
+    <div class="form-actions">
+      <button mat-button type="button" [routerLink]="['/izby', hotelId]">
+        ← Späť
+      </button>
+      <button mat-raised-button color="primary" type="submit">
+        {{ isEditMode ? 'Uložiť zmeny' : 'Pridať izbu' }}
+      </button>
+    </div>
+
+  </form>
+
+</div>

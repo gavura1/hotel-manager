@@ -1,0 +1,19 @@
+.list-container {
+  padding: 16px;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+table {
+  width: 100%;
+}

@@ -26,20 +26,25 @@ public class RoomController {
         return roomService.getRoomById(id);
     }
 
+    @GetMapping("/hotel/{hotelId}")
+    public List<RoomResponseDto> getRoomsByHotel(@PathVariable Long hotelId) {
+        return roomService.getRoomsByHotel(hotelId);
+    }
+
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public RoomResponseDto createRoom(@RequestBody RoomRequestDto requestDto) {
         return roomService.createRoom(requestDto);
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public RoomResponseDto updateRoom(@PathVariable Long id, @RequestBody RoomRequestDto requestDto) {
         return roomService.updateRoom(id, requestDto);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public void deleteRoom(@PathVariable Long id) {
         roomService.deleteRoom(id);
     }
