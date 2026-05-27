@@ -37,7 +37,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/api.hotely", "/api/hotely/**").permitAll()
-                        .requestMatchers("api/izby","/api/izby/**").permitAll()
+                        .requestMatchers("/api/izby","/api/izby/**").permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
