@@ -10,6 +10,7 @@ import sk.umb.hotelmanager.repository.HotelRepository;
 import sk.umb.hotelmanager.repository.RoomRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +25,11 @@ public class RoomService {
     public RoomResponseDto getRoomById(Long id) {
         Room room = roomRepository.findById(id).orElseThrow(() -> new RuntimeException("Izba podľa id nebola nájdená"));
         return mapToResponseDto(room);
+    }
+
+    public List<RoomResponseDto> getRoomsByHotel(Long hotelId) {
+        return roomRepository.findByHotelId(hotelId).stream().map(this::mapToResponseDto)
+                .collect(Collectors.toList());
     }
 
     public RoomResponseDto createRoom(RoomRequestDto requestDto) {

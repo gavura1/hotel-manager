@@ -25,8 +25,9 @@ export const routes: Routes = [
 
       // IZBY
       { path: 'izby', component: RoomList },
-      { path: 'izby/vytvorit', component: RoomForm },
-      { path: 'izby/upravit/:id', component: RoomForm },
+      { path: 'izby/:hotelId', component: RoomList},
+      { path: 'izby/:hotelId/vytvorit', component: RoomForm },
+      { path: 'izby/:hotelId/upravit/:id', component: RoomForm },
     ],
   },
 ];
