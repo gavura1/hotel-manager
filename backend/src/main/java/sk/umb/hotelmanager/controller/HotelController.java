@@ -27,19 +27,19 @@ public class HotelController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public HotelResponseDto createHotel(@RequestBody HotelRequestDto RequestDto) {
         return hotelService.createHotel(RequestDto);
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public HotelResponseDto updateHotel(@PathVariable Long id, @RequestBody HotelRequestDto RequestDto) {
         return hotelService.updateHotel(id, RequestDto);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public void deleteHotelById(@PathVariable Long id) {
         hotelService.deleteHotel(id);
     }
