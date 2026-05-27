@@ -23,6 +23,7 @@ export const routes: Routes = [
         pathMatch: 'full',
       },
 
+
       // HOTELY
       { path: 'hotely', component: HotelList },
       { path: 'hotely/vytvorit', component: HotelForm },
