@@ -6,6 +6,7 @@
       <list>
         <option value="$PROJECT_DIR$/tojejedno-fixed/pom.xml" />
         <option value="$PROJECT_DIR$/tojejedno/pom.xml" />
+        <option value="$PROJECT_DIR$/backend/pom.xml" />
       </list>
     </option>
   </component>
