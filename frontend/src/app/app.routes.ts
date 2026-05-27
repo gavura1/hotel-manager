@@ -5,6 +5,8 @@ import { HotelList } from './features/hotels/pages/hotel-list/hotel-list';
 import { HotelForm } from './features/hotels/pages/hotel-form/hotel-form';
 import { RoomList } from './features/rooms/pages/room-list/room-list';
 import { RoomForm } from './features/rooms/pages/room-form/room-form';
+import { BookingList } from './features/booking/pages/booking-list/booking-list';
+import { BookingForm } from './features/booking/pages/booking-form/booking-form';
 import { AuthCallbackComponent } from './auth/auth-callback.component';
 import { LoginComponent } from './auth/login.component';
 import {authGuard} from './auth/auth.guard';
@@ -23,7 +25,6 @@ export const routes: Routes = [
         pathMatch: 'full',
       },
 
-
       // HOTELY
       { path: 'hotely', component: HotelList },
       { path: 'hotely/vytvorit', component: HotelForm },
@@ -34,6 +35,10 @@ export const routes: Routes = [
       { path: 'izby/:hotelId', component: RoomList },
       { path: 'izby/:hotelId/vytvorit', component: RoomForm },
       { path: 'izby/:hotelId/upravit/:id', component: RoomForm },
+
+      // REZERVACIE
+      { path: 'rezervacie', component: BookingList },
+      { path: 'rezervacie/vytvorit', component: BookingForm },
     ],
   },
 ];
