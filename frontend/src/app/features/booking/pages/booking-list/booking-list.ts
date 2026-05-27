@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,7 +11,7 @@ import { Booking } from '../../models/booking.model';
 @Component({
   selector: 'app-booking-list',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatButtonModule, RouterLink],
+  imports: [CommonModule, MatTableModule, MatButtonModule],
   templateUrl: './booking-list.html',
   styleUrl: './booking-list.css',
 })
