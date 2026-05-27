@@ -1,0 +1,20 @@
+.form-container {
+  max-width: 700px;
+
+  background-color: white;
+
+  padding: 24px;
+
+  border-radius: 12px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+mat-form-field {
+  width: 100%;
+}
