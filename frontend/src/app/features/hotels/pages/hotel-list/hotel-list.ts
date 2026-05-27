@@ -1,24 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-
 import { CommonModule } from '@angular/common';
-
-import { MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
-
 import { RouterLink } from '@angular/router';
+
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 
 import { HotelService } from '../../services/hotel.service';
 import { Hotel } from '../../models/hotel.model';
 
 @Component({
   selector: 'app-hotel-list',
+  standalone: true,
   imports: [CommonModule, MatTableModule, MatButtonModule, RouterLink],
   templateUrl: './hotel-list.html',
   styleUrl: './hotel-list.css',
 })
 export class HotelList implements OnInit {
-  hotels: Hotel[] = [];
-
+  dataSource = new MatTableDataSource<Hotel>([]);
   displayedColumns: string[] = ['id', 'name', 'address', 'description', 'actions'];
 
   constructor(private hotelService: HotelService) {}
@@ -30,9 +28,8 @@ export class HotelList implements OnInit {
   loadHotels(): void {
     this.hotelService.getHotels().subscribe({
       next: (data) => {
-        this.hotels = data;
+        this.dataSource.data = data;
       },
-
       error: (err) => {
         console.error(err);
       },
@@ -40,14 +37,11 @@ export class HotelList implements OnInit {
   }
 
   deleteHotel(id: number): void {
-    this.hotelService.deleteHotel(id).subscribe({
-      next: () => {
-        this.loadHotels();
-      },
+    if (!confirm('Naozaj chceš vymazať tento hotel?')) return;
 
-      error: (err) => {
-        console.error(err);
-      },
+    this.hotelService.deleteHotel(id).subscribe({
+      next: () => this.loadHotels(),
+      error: (err) => console.error(err),
     });
   }
 }
