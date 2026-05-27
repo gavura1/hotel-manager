@@ -2,6 +2,7 @@ package sk.umb.hotelmanager.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import sk.umb.hotelmanager.dto.AuthRequestDto;
 import sk.umb.hotelmanager.dto.AuthResponseDto;
@@ -25,4 +26,6 @@ public class AuthController {
     public UserMeResponseDto me(Authentication authentication) {
         return authService.getCurrentUser(authentication);
     }
+
+
 }
