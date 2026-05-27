@@ -6,15 +6,16 @@ import { HotelForm } from './features/hotels/pages/hotel-form/hotel-form';
 import { RoomList } from './features/rooms/pages/room-list/room-list';
 import { RoomForm } from './features/rooms/pages/room-form/room-form';
 import { AuthCallbackComponent } from './auth/auth-callback.component';
+import { LoginComponent } from './auth/login.component';
+import {authGuard} from './auth/auth.guard';
 
 export const routes: Routes = [
-  {
-    path: 'auth/callback',
-    component: AuthCallbackComponent,
-  },
+  { path: 'login', component: LoginComponent },
+  { path: 'auth/callback', component: AuthCallbackComponent },
   {
     path: '',
     component: DashboardLayout,
+    canActivate: [authGuard],
     children: [
       {
         path: '',
