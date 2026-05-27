@@ -5,12 +5,16 @@ import { HotelList } from './features/hotels/pages/hotel-list/hotel-list';
 import { HotelForm } from './features/hotels/pages/hotel-form/hotel-form';
 import { RoomList } from './features/rooms/pages/room-list/room-list';
 import { RoomForm } from './features/rooms/pages/room-form/room-form';
+import { AuthCallbackComponent } from './auth/auth-callback.component';
 
 export const routes: Routes = [
   {
+    path: 'auth/callback',
+    component: AuthCallbackComponent,
+  },
+  {
     path: '',
     component: DashboardLayout,
-
     children: [
       {
         path: '',
@@ -25,7 +29,7 @@ export const routes: Routes = [
 
       // IZBY
       { path: 'izby', component: RoomList },
-      { path: 'izby/:hotelId', component: RoomList},
+      { path: 'izby/:hotelId', component: RoomList },
       { path: 'izby/:hotelId/vytvorit', component: RoomForm },
       { path: 'izby/:hotelId/upravit/:id', component: RoomForm },
     ],
