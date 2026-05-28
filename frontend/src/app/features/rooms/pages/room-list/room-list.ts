@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { HotelService } from '../../../hotels/services/hotel.service';
 import { RoomService } from '../../services/room.service';
+import { AuthService } from '../../../../auth/auth.service';
 import { Hotel } from '../../../hotels/models/hotel.model';
 import { Room, ROOM_TYPE, ROOM_STATUS } from '../../models/room.models';
 
@@ -19,6 +20,7 @@ import { Room, ROOM_TYPE, ROOM_STATUS } from '../../models/room.models';
 })
 export class RoomList implements OnInit {
   hotelId: number | null = null;
+  isAdminOrManager = false;
 
   hotelDataSource = new MatTableDataSource<Hotel>([]);
   hotelColumns: string[] = ['id', 'name', 'address', 'actions'];
@@ -33,8 +35,14 @@ export class RoomList implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private hotelService: HotelService,
-    private roomService: RoomService
-  ) {}
+    private roomService: RoomService,
+    private authService: AuthService
+  ) {
+    this.isAdminOrManager = this.authService.isAdminOrManager();
+    if (!this.isAdminOrManager) {
+      this.roomColumns = ['roomNumber', 'roomType', 'roomStatus', 'pricePerNight', 'capacity'];
+    }
+  }
 
   ngOnInit(): void {
     const param = this.route.snapshot.paramMap.get('hotelId');
@@ -63,7 +71,6 @@ export class RoomList implements OnInit {
 
   deleteRoom(id: number): void {
     if (!confirm('Naozaj chceš vymazať túto izbu?')) return;
-
     this.roomService.deleteRoom(id).subscribe({
       next: () => this.loadRooms(),
       error: (err) => console.error(err),

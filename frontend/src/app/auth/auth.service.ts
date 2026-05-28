@@ -31,4 +31,40 @@ export class AuthService {
   getMe(): Observable<any> {
     return this.http.get('http://localhost:8080/auth/me');
   }
+
+  getCurrentUserEmail(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.sub;
+    } catch {
+      return null;
+    }
+  }
+
+  getCurrentUserRole(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.role;
+    } catch {
+      return null;
+    }
+  }
+
+  isAdmin(): boolean {
+    return this.getCurrentUserRole() === 'ADMIN';
+  }
+
+  isManager(): boolean {
+    return this.getCurrentUserRole() === 'MANAGER';
+  }
+
+  isAdminOrManager(): boolean {
+    return this.isAdmin() || this.isManager();
+  }
 }

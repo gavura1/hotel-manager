@@ -32,19 +32,19 @@ public class RoomController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN', 'MANAGER')")
     public RoomResponseDto createRoom(@RequestBody RoomRequestDto requestDto) {
         return roomService.createRoom(requestDto);
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN', 'MANAGER')")
     public RoomResponseDto updateRoom(@PathVariable Long id, @RequestBody RoomRequestDto requestDto) {
         return roomService.updateRoom(id, requestDto);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN', 'MANAGER)'")
     public void deleteRoom(@PathVariable Long id) {
         roomService.deleteRoom(id);
     }
