@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { HotelService } from '../../services/hotel.service';
 import { Hotel } from '../../models/hotel.model';
+import { AuthService } from '../../../../auth/auth.service';
 
 @Component({
   selector: 'app-hotel-list',
@@ -18,8 +19,17 @@ import { Hotel } from '../../models/hotel.model';
 export class HotelList implements OnInit {
   dataSource = new MatTableDataSource<Hotel>([]);
   displayedColumns: string[] = ['id', 'name', 'address', 'description', 'actions'];
+  isAdmin = false;
 
-  constructor(private hotelService: HotelService) {}
+  constructor(
+    private hotelService: HotelService,
+    private authService: AuthService
+  ) {
+    this.isAdmin = this.authService.isAdmin();
+    if (!this.isAdmin) {
+      this.displayedColumns = ['id', 'name', 'address', 'description'];
+    }
+  }
 
   ngOnInit(): void {
     this.loadHotels();

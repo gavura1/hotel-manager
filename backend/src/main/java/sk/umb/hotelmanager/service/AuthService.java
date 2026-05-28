@@ -36,7 +36,10 @@ public class AuthService {
             );
         }
 
-        String token = jwtService.generateToken(request.username());
+        User user = userRepository.findByEmail(request.username())
+                .orElseThrow(() -> new ResponseStatusException(
+                        org.springframework.http.HttpStatus.UNAUTHORIZED, "User nenájdený"));
+        String token = jwtService.generateToken(user.getEmail(), user.getRole().name());
         return new AuthResponseDto(token);
     }
 

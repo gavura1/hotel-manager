@@ -26,7 +26,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
         User user = userRepository.findByGoogleId(googleId).orElseThrow(() -> new RuntimeException("User nenájdený po OAuth2 logine"));
 
-        String token = jwtService.generateToken(user.getEmail());
+        String token = jwtService.generateToken(user.getEmail(), user.getRole().name());
 
         response.sendRedirect("http://localhost:4200/auth/callback?token=" + token);
     }
