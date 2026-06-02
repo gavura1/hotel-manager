@@ -6,12 +6,13 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { BookingService } from '../../services/booking.service';
 import { Booking } from '../../models/booking.model';
+import {RouterLink} from '@angular/router';
 
 
 @Component({
   selector: 'app-booking-list',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatButtonModule],
+  imports: [CommonModule, MatTableModule, MatButtonModule, RouterLink],
   templateUrl: './booking-list.html',
   styleUrl: './booking-list.css',
 })
@@ -45,11 +46,11 @@ export class BookingList implements OnInit {
   }
 
   cancelBooking(id: number): void {
-    if(!confirm('Naozaj chceš vymazat túto rezerváciu?')) return;
+    if (!confirm('Naozaj chceš vymazat túto rezerváciu?')) return;
 
     this.bookingService.cancelBooking(id).subscribe({
       next: (data) => this.loadBookings(),
       error: (err) => console.error(err),
-    })
+    });
   }
 }

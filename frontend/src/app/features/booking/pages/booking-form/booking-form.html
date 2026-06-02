@@ -1,10 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+<div class="form-container">
 
-</body>
-</html>
+  <h2> 'Nová rezervácia' </h2>
+
+  <form
+    [formGroup]="bookingForm"
+    (ngSubmit)="onSubmit()">
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Číslo izby</mat-label>
+
+      <input
+        matInput
+        formControlName="roomId">
+
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Meno</mat-label>
+
+      <input
+        matInput
+        formControlName="guestName">
+
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Od</mat-label>
+
+      <input
+        matInput
+        formControlName="fromDate">
+
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Do</mat-label>
+
+      <input
+        matInput
+        formControlName="toDate">
+
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Poznámka</mat-label>
+
+      <textarea
+        matInput
+        rows="5"
+        formControlName="note">
+      </textarea>
+
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit">
+
+      'Vytvoriť rezerváciu'
+
+    </button>
+
+  </form>
+
+</div>
