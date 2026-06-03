@@ -12,7 +12,7 @@ export class RoomService {
   constructor(private http: HttpClient) {}
 
   getRoomsByHotel(hotelId: number): Observable<Room[]> {
-    return this.http.get<Room[]>(`http://localhost:8080/api/hotely/${hotelId}/izby`);
+    return this.http.get<Room[]>(`http://localhost:8080/api/izby/hotel/${hotelId}`);
   }
 
   getRoomById(id: number): Observable<Room> {

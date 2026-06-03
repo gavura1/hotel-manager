@@ -4,7 +4,14 @@
   <p>{{ hotel.address }}</p>
   <p>{{ hotel.description }}</p>
 
-  <h3>Dostupné izby</h3>
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <h3>Dostupné izby</h3>
+    <button mat-raised-button color="primary"
+            *ngIf="isAdmin"
+            [routerLink]="['/izby', hotel.id, 'vytvorit']">
+      Pridať izbu
+    </button>
+  </div>
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
 
