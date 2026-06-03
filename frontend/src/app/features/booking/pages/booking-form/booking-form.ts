@@ -10,7 +10,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 
 import { BookingService } from '../../services/booking.service';
 import { RoomService } from '../../../rooms/services/room.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-booking-form',
@@ -37,6 +37,7 @@ export class BookingForm implements OnInit {
     private bookingService: BookingService,
     private roomService: RoomService,
     private router: Router,
+    private route: ActivatedRoute,
   ) {
     this.bookingForm = this.fb.group({
       roomId: ['', Validators.required],
@@ -51,6 +52,12 @@ export class BookingForm implements OnInit {
     this.roomService.getRoomsByHotel(1).subscribe({
       next: (data) => {
         this.rooms = data;
+
+
+        const roomId = this.route.snapshot.queryParamMap.get('roomId');
+        if (roomId) {
+          this.bookingForm.patchValue({ roomId: Number(roomId) });
+        }
       },
       error: (err) => console.error(err),
     });

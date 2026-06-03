@@ -27,7 +27,7 @@ export class HotelList implements OnInit {
   ) {
     this.isAdmin = this.authService.isAdmin();
     if (!this.isAdmin) {
-      this.displayedColumns = ['id', 'name', 'address', 'description'];
+      this.displayedColumns = ['id', 'name', 'address', 'description', 'actions'];
     }
   }
 

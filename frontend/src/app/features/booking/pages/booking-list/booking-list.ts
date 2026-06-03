@@ -28,6 +28,8 @@ export class BookingList implements OnInit {
     'actions',
   ];
   currentUserId: number = 0;
+  allBookings: Booking[] = [];
+  activeFilter: string = 'ALL';
 
   constructor(
     private bookingService: BookingService,
@@ -47,12 +49,20 @@ export class BookingList implements OnInit {
   loadBookings(userId: number): void {
     this.bookingService.getBookingsByUser(userId).subscribe({
       next: (data) => {
-        this.dataSource.data = data;
+        this.allBookings = data;
+        this.applyFilter(this.activeFilter);
       },
-      error: (err) => {
-        console.error(err);
-      },
+      error: (err) => console.error(err),
     });
+  }
+
+  applyFilter(filter: string): void {
+    this.activeFilter = filter;
+    if (filter === 'ALL') {
+      this.dataSource.data = this.allBookings;
+    } else {
+      this.dataSource.data = this.allBookings.filter((b) => b.status === filter);
+    }
   }
 
   cancelBooking(id: number): void {
