@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 
 import { BookingService } from '../../services/booking.service';
 import { Booking } from '../../models/booking.model';
-import {RouterLink} from '@angular/router';
-
+import { AuthService } from '../../../../auth/auth.service';
 
 @Component({
   selector: 'app-booking-list',
@@ -27,15 +27,25 @@ export class BookingList implements OnInit {
     'totalPrice',
     'actions',
   ];
+  currentUserId: number = 0;
 
-  constructor(private bookingService: BookingService) {}
+  constructor(
+    private bookingService: BookingService,
+    private authService: AuthService,
+  ) {}
 
   ngOnInit(): void {
-    this.loadBookings();
+    this.authService.getMe().subscribe({
+      next: (user: any) => {
+        this.currentUserId = user.id;
+        this.loadBookings(user.id);
+      },
+      error: (err) => console.error(err),
+    });
   }
 
-  loadBookings(): void {
-    this.bookingService.getBookingsByUser(1).subscribe({
+  loadBookings(userId: number): void {
+    this.bookingService.getBookingsByUser(userId).subscribe({
       next: (data) => {
         this.dataSource.data = data;
       },
@@ -46,10 +56,10 @@ export class BookingList implements OnInit {
   }
 
   cancelBooking(id: number): void {
-    if (!confirm('Naozaj chceš vymazat túto rezerváciu?')) return;
+    if (!confirm('Naozaj chceš zrušiť túto rezerváciu?')) return;
 
     this.bookingService.cancelBooking(id).subscribe({
-      next: (data) => this.loadBookings(),
+      next: () => this.loadBookings(this.currentUserId),
       error: (err) => console.error(err),
     });
   }
