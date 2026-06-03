@@ -1,0 +1,35 @@
+<div class="login-container">
+  <div class="login-card">
+
+    <h2>Hotel Management System</h2>
+    <p class="subtitle">Prihláste sa do systému</p>
+
+    <button mat-raised-button class="google-btn" (click)="onGoogleLogin()">
+      Prihlásiť sa cez Google
+    </button>
+
+    <div class="divider">
+      <span>alebo</span>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="username" type="email">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Heslo</mat-label>
+        <input matInput formControlName="password" type="password">
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">
+        Prihlásiť sa
+      </button>
+      <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+    </form>
+
+  </div>
+</div>
