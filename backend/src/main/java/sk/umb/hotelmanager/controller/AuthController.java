@@ -27,5 +27,11 @@ public class AuthController {
         return authService.getCurrentUser(authentication);
     }
 
+    // docasny controller
+    @GetMapping("/hash")
+    public String hash() {
+        return new BCryptPasswordEncoder().encode("password");
+    }
+
 
 }

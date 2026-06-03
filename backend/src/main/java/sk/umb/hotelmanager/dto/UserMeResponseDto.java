@@ -1,5 +1,5 @@
 package sk.umb.hotelmanager.dto;
 
-public record UserMeResponseDto(String email, String name, String role){
+public record UserMeResponseDto(Long id, String email, String name, String role) {
 
 }

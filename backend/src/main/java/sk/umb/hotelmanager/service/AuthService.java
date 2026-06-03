@@ -34,6 +34,6 @@ public class AuthService {
 
         User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Používateľ nebol nájdený"));
 
-        return new UserMeResponseDto(user.getEmail(), user.getName(), user.getRole().name());
+        return new UserMeResponseDto(user.getId(), user.getEmail(), user.getName(), user.getRole().name());
     }
 }
