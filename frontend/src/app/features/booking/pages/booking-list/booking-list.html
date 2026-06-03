@@ -1,13 +1,18 @@
 <div class="hotel-header">
   <h2>Moje rezervácie</h2>
-  <button mat-raised-button color="primary"
-          routerLink="/rezervacie/vytvorit">
+  <button mat-raised-button color="primary" routerLink="/rezervacie/vytvorit">
     Nová rezervácia
   </button>
 </div>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
+<div class="filter-buttons">
+  <button mat-button [color]="activeFilter === 'ALL' ? 'primary' : ''" (click)="applyFilter('ALL')">Všetky</button>
+  <button mat-button [color]="activeFilter === 'CONFIRMED' ? 'primary' : ''" (click)="applyFilter('CONFIRMED')">Aktívne</button>
+  <button mat-button [color]="activeFilter === 'CANCELLED' ? 'primary' : ''" (click)="applyFilter('CANCELLED')">Zrušené</button>
+  <button mat-button [color]="activeFilter === 'COMPLETED' ? 'primary' : ''" (click)="applyFilter('COMPLETED')">Ukončené</button>
+</div>
 
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
 
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef>ID</th>
@@ -40,14 +45,14 @@
 
   <ng-container matColumnDef="totalPrice">
     <th mat-header-cell *matHeaderCellDef>Suma</th>
-    <td mat-cell *matCellDef="let booking">{{ booking.totalPrice }}</td>
+    <td mat-cell *matCellDef="let booking">{{ booking.totalPrice }} €</td>
   </ng-container>
 
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let booking">
-
       <button mat-button color="warn"
+              *ngIf="booking.status === 'CONFIRMED'"
               (click)="cancelBooking(booking.id!)">
         Zrušiť
       </button>

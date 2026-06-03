@@ -9,10 +9,10 @@ import { Room } from '../models/room.models';
 export class RoomService {
   private apiUrl = 'http://localhost:8080/api/izby';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getRoomsByHotel(hotelId: number): Observable<Room[]> {
-    return this.http.get<Room[]>(`${this.apiUrl}/hotel/${hotelId}`);
+    return this.http.get<Room[]>(`http://localhost:8080/api/hotely/${hotelId}/izby`);
   }
 
   getRoomById(id: number): Observable<Room> {

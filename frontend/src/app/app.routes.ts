@@ -8,6 +8,7 @@ import { RoomForm } from './features/rooms/pages/room-form/room-form';
 import { BookingList } from './features/booking/pages/booking-list/booking-list';
 import { BookingForm } from './features/booking/pages/booking-form/booking-form';
 import { AuthCallbackComponent } from './auth/auth-callback.component';
+import { HotelDetail } from './features/hotels/pages/hotel-detail/hotel-detail';
 import { LoginComponent } from './auth/login.component';
 import {authGuard} from './auth/auth.guard';
 
@@ -29,6 +30,7 @@ export const routes: Routes = [
       { path: 'hotely', component: HotelList },
       { path: 'hotely/vytvorit', component: HotelForm },
       { path: 'hotely/upravit/:id', component: HotelForm },
+      { path: 'hotely/:id', component: HotelDetail },
 
       // IZBY
       { path: 'izby', component: RoomList },
