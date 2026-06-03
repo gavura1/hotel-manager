@@ -27,6 +27,7 @@ export class BookingList implements OnInit {
     'totalPrice',
     'actions',
   ];
+  currentUserId: number = 0;
 
   constructor(
     private bookingService: BookingService,
@@ -36,6 +37,7 @@ export class BookingList implements OnInit {
   ngOnInit(): void {
     this.authService.getMe().subscribe({
       next: (user: any) => {
+        this.currentUserId = user.id;
         this.loadBookings(user.id);
       },
       error: (err) => console.error(err),
@@ -57,7 +59,7 @@ export class BookingList implements OnInit {
     if (!confirm('Naozaj chceš zrušiť túto rezerváciu?')) return;
 
     this.bookingService.cancelBooking(id).subscribe({
-      next: () => this.loadBookings(0),
+      next: () => this.loadBookings(this.currentUserId),
       error: (err) => console.error(err),
     });
   }
