@@ -40,13 +40,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/api.hotely", "/api/hotely/**").permitAll()
+                        .requestMatchers("/api/hotely", "/api/hotely/**").permitAll()
                         .requestMatchers("/api/izby","/api/izby/**").permitAll()
+                        .requestMatchers("/api/rezervacie", "/api/rezervacie/**").authenticated()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .oauth2Login(oauth2 -> oauth2.userInfoEndpoint(userInfo -> userInfo.
                         userService(oAuth2UserService)).successHandler(oAuth2SuccessHandler))
