@@ -9,7 +9,10 @@ import { Observable } from 'rxjs';
 export class AuthService {
   private tokenKey = 'jwt_token';
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+  ) {}
 
   saveToken(token: string): void {
     localStorage.setItem(this.tokenKey, token);
@@ -66,5 +69,16 @@ export class AuthService {
 
   isAdminOrManager(): boolean {
     return this.isAdmin() || this.isManager();
+  }
+
+  isTokenExpired(): boolean {
+    const token = this.getToken();
+    if (!token) return true;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.exp * 1000 < Date.now();
+    } catch {
+      return true;
+    }
   }
 }

@@ -56,6 +56,7 @@ public class HotelService {
 
     private HotelResponseDto mapToResponseDto(Hotel hotel) {
         return HotelResponseDto.builder().id(hotel.getId()).name(hotel.getName()).address(hotel.getAddress())
-                .description(hotel.getDescription()).build();
+                .description(hotel.getDescription()).managerId(hotel.getManager() != null ? hotel.getManager().getId() : null)
+                .managerName(hotel.getManager() != null ? hotel.getManager().getName() : null).build();
     }
 }
