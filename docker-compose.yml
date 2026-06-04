@@ -12,7 +12,7 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./backend/src/main/resources/init.sql:/docker-entrypoint-initdb.d/data.sql
+      - ./backend/src/main/resources/data.sql:/docker-entrypoint-initdb.d/data.sql
     restart: always
 
   phpmyadmin:
