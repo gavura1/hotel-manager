@@ -10,7 +10,8 @@ import { BookingForm } from './features/booking/pages/booking-form/booking-form'
 import { AuthCallbackComponent } from './auth/auth-callback.component';
 import { HotelDetail } from './features/hotels/pages/hotel-detail/hotel-detail';
 import { LoginComponent } from './auth/login.component';
-import {authGuard} from './auth/auth.guard';
+import { UserList } from './features/admin/pages/user-list/user-list';
+import { authGuard } from './auth/auth.guard';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -41,6 +42,9 @@ export const routes: Routes = [
       // REZERVACIE
       { path: 'rezervacie', component: BookingList },
       { path: 'rezervacie/vytvorit', component: BookingForm },
+
+      // ADMIN
+      { path: 'pouzivatelia', component: UserList },
     ],
   },
 ];

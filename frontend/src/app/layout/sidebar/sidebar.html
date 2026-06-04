@@ -1,15 +1,19 @@
 <nav class="sidebar">
 
-  <a routerLink="/hotely">
-    Hotely
-  </a>
+    <a routerLink="/hotely">
+        Hotely
+    </a>
 
-  <a routerLink="/rezervacie">
-    Rezervácie
-  </a>
+    <a routerLink="/rezervacie">
+        Rezervácie
+    </a>
 
-  <a routerLink="/izby">
-    Izby
-  </a>
+    <a routerLink="/izby">
+        Izby
+    </a>
+
+    <a *ngIf="isAdmin" routerLink="/pouzivatelia">
+        Používatelia
+    </a>
 
 </nav>
