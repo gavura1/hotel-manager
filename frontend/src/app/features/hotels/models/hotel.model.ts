@@ -6,4 +6,8 @@ export interface Hotel {
   address: string;
 
   description: string;
+
+  managerId?: number;
+
+  managerName?: String
 }
