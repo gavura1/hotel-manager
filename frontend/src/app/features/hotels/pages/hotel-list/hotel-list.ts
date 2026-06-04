@@ -18,7 +18,7 @@ import { AuthService } from '../../../../auth/auth.service';
 })
 export class HotelList implements OnInit {
   dataSource = new MatTableDataSource<Hotel>([]);
-  displayedColumns: string[] = ['id', 'name', 'address', 'description', 'actions'];
+  displayedColumns: string[] = ['id', 'name', 'address', 'description', 'manager', 'actions'];
   isAdmin = false;
 
   constructor(

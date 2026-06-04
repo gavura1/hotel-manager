@@ -49,15 +49,13 @@ public class AdminService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Používateľ nebol nájdený"));
 
-        // odober tohto managera zo všetkých jeho aktuálnych hotelov
         hotelRepository.findByManagerId(id).forEach(hotel -> {
             hotel.setManager(null);
             hotelRepository.save(hotel);
         });
 
-        // priraď nové hotely
-        if (request.getHotelId() != null) {
-            request.getHotelId().forEach(hotelId -> {
+        if (request.getHotelIds() != null) {
+            request.getHotelIds().forEach(hotelId -> {
                 Hotel hotel = hotelRepository.findById(hotelId)
                         .orElseThrow(() -> new RuntimeException("Hotel nebol nájdený"));
                 hotel.setManager(user);
@@ -65,8 +63,12 @@ public class AdminService {
             });
         }
 
-        return mapToDto(userRepository.save(user));
+        // načítaj usera znova aby sa prejavili zmeny
+        User updatedUser = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Používateľ nebol nájdený"));
+        return mapToDto(updatedUser);
     }
+
 
     private UserResponseDto mapToDto(User user) {
         List<Long> hotelIds = hotelRepository.findByManagerId(user.getId())
@@ -77,7 +79,7 @@ public class AdminService {
                 .email(user.getEmail())
                 .name(user.getName())
                 .role(user.getRole().name())
-                .hotelId(hotelIds)
+                .hotelIds(hotelIds)
                 .build();
     }
 }
