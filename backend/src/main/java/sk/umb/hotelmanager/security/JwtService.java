@@ -16,12 +16,15 @@ public class JwtService {
     @Value("${jwt.secret}")
     private String secret;
 
+    @Value("${app.jwt.expiration-ms}")
+    private long expirationMs;
+
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
 
     public String generateToken(String email, String role) {
-        return Jwts.builder().setSubject(email).claim("role", role).setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
+        return Jwts.builder().setSubject(email).claim("role", role).setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis() + expirationMs))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
     }
 
