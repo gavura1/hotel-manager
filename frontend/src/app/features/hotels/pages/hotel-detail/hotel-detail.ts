@@ -60,6 +60,7 @@ export class HotelDetail implements OnInit {
   }
 
   rezervovat(roomId: number): void {
-    this.router.navigate(['/rezervacie/vytvorit'], { queryParams: { roomId } });
+    this.router.navigate(['/rezervacie/vytvorit'],
+      { queryParams: { roomId, hotelId: this.hotel.id } });
   }
 }

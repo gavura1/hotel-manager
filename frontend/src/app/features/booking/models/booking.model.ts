@@ -7,5 +7,6 @@ export interface Booking {
   totalPrice: number;
   status: 'CONFIRMED' | 'CANCELLED' | 'COMPLETED';
   createdAt: Date;
+  hotelName: string;
   note: string;
 }

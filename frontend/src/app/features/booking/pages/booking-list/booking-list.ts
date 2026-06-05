@@ -25,6 +25,7 @@ export class BookingList implements OnInit {
     'toDate',
     'status',
     'totalPrice',
+    'hotelName',
     'actions',
   ];
   currentUserId: number = 0;
