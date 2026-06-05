@@ -1,0 +1,62 @@
+<div class="form-container">
+
+  <h2>
+
+    {{ isEditMode
+    ? 'Úprava hotela'
+    : 'Vytvorenie hotela'
+    }}
+
+  </h2>
+
+  <form
+    [formGroup]="hotelForm"
+    (ngSubmit)="onSubmit()">
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Názov hotela</mat-label>
+
+      <input
+        matInput
+        formControlName="name">
+
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Adresa</mat-label>
+
+      <input
+        matInput
+        formControlName="address">
+
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Popis</mat-label>
+
+      <textarea
+        matInput
+        rows="5"
+        formControlName="description">
+      </textarea>
+
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit">
+
+      {{ isEditMode
+      ? 'Uložiť zmeny'
+      : 'Vytvoriť hotel'
+      }}
+
+    </button>
+
+  </form>
+
+</div>

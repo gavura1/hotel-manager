@@ -1,0 +1,7 @@
+<header class="navbar">
+  <h2>Hotel Management System</h2>
+  <div class="navbar-right">
+    <span class="user-email" *ngIf="userEmail">{{ userEmail }}</span>
+    <button mat-button (click)="logout()">Odhlásiť sa</button>
+  </div>
+</header>

@@ -1,0 +1,66 @@
+<div class="hotel-detail-container" *ngIf="hotel">
+
+  <h2>{{ hotel.name }}</h2>
+  <p>{{ hotel.address }}</p>
+  <p>{{ hotel.description }}</p>
+
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <h3>Dostupné izby</h3>
+    <button mat-raised-button color="primary"
+            *ngIf="isAdmin"
+            [routerLink]="['/izby', hotel.id, 'vytvorit']">
+      Pridať izbu
+    </button>
+  </div>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z2">
+
+    <ng-container matColumnDef="roomNumber">
+      <th mat-header-cell *matHeaderCellDef>Číslo izby</th>
+      <td mat-cell *matCellDef="let room">{{ room.roomNumber }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="roomType">
+      <th mat-header-cell *matHeaderCellDef>Typ</th>
+      <td mat-cell *matCellDef="let room">
+        {{ room.roomType === 'TWO_BED' ? 'Dvojlôžková' :
+        room.roomType === 'THREE_BED' ? 'Trojlôžková' :
+          room.roomType === 'APARTMENT' ? 'Apartmán' : room.roomType }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="capacity">
+      <th mat-header-cell *matHeaderCellDef>Kapacita</th>
+      <td mat-cell *matCellDef="let room">{{ room.capacity }} os.</td>
+    </ng-container>
+
+    <ng-container matColumnDef="pricePerNight">
+      <th mat-header-cell *matHeaderCellDef>Cena/noc</th>
+      <td mat-cell *matCellDef="let room">{{ room.pricePerNight }} €</td>
+    </ng-container>
+
+    <ng-container matColumnDef="roomStatus">
+      <th mat-header-cell *matHeaderCellDef>Stav</th>
+      <td mat-cell *matCellDef="let room">
+        {{ room.roomStatus === 'AVAILABLE' ? 'Voľná' :
+        room.roomStatus === 'OCCUPIED' ? 'Obsadená' : 'Mimo prevádzky' }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let room">
+        <button mat-raised-button color="primary"
+                *ngIf="room.roomStatus === 'AVAILABLE'"
+                (click)="rezervovat(room.id)">
+          Rezervovať
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+  </table>
+
+</div>

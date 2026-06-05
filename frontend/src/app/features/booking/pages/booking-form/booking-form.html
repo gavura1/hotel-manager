@@ -1,0 +1,53 @@
+<div class="form-container">
+
+  <h2>Nová rezervácia</h2>
+
+  <form
+    [formGroup]="bookingForm"
+    (ngSubmit)="onSubmit()">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Izba</mat-label>
+      <mat-select formControlName="roomId">
+        <mat-option *ngFor="let room of rooms" [value]="room.id">
+          {{ room.roomNumber }} - {{  room.roomType === 'TWO_BED' ? 'Dvojlôžková' :
+          room.roomType === 'THREE_BED' ? 'Trojlôžková' :
+            room.roomType === 'APARTMENT' ? 'Apartmán' : room.roomType }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Meno hosťa</mat-label>
+      <input matInput formControlName="guestName">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Od</mat-label>
+      <input matInput [matDatepicker]="pickerFrom" formControlName="fromDate">
+      <mat-datepicker-toggle matIconSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+      <mat-datepicker #pickerFrom></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Do</mat-label>
+      <input matInput [matDatepicker]="pickerTo" formControlName="toDate">
+      <mat-datepicker-toggle matIconSuffix [for]="pickerTo"></mat-datepicker-toggle>
+      <mat-datepicker #pickerTo></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Poznámka</mat-label>
+      <textarea matInput rows="5" formControlName="note"></textarea>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit">
+      Vytvoriť rezerváciu
+    </button>
+
+  </form>
+
+</div>
