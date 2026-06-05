@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-
   private tokenKey = 'jwt_token';
 
   constructor(
@@ -94,7 +93,6 @@ export class AuthService {
   // =========================
 
   getMe(): Observable<any> {
-    // interceptor sa postara o Authorization header
-    return this.http.get('/auth/me');
+    return this.http.get('http://localhost:8080/auth/me');
   }
 }
