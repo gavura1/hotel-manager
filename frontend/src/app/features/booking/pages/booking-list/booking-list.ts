@@ -17,6 +17,7 @@ import { AuthService } from '../../../../auth/auth.service';
   styleUrl: './booking-list.css',
 })
 export class BookingList implements OnInit {
+
   dataSource = new MatTableDataSource<Booking>([]);
   displayedColumns: string[] = [
     'id',
@@ -27,7 +28,7 @@ export class BookingList implements OnInit {
     'totalPrice',
     'actions',
   ];
-  currentUserId: number = 0;
+
   allBookings: Booking[] = [];
   activeFilter: string = 'ALL';
 
@@ -38,17 +39,16 @@ export class BookingList implements OnInit {
 
   ngOnInit(): void {
     this.authService.getMe().subscribe({
-      next: (user: any) => {
-        this.currentUserId = user.id;
-        this.loadBookings(user.id);
+      next: () => {
+        this.loadBookings();
       },
       error: (err) => console.error(err),
     });
   }
 
-  loadBookings(userId: number): void {
-    this.bookingService.getBookingsByUser(userId).subscribe({
-      next: (data) => {
+  loadBookings(): void {
+    this.bookingService.getBookings().subscribe({
+      next: (data: Booking[]) => {
         this.allBookings = data;
         this.applyFilter(this.activeFilter);
       },
@@ -58,10 +58,13 @@ export class BookingList implements OnInit {
 
   applyFilter(filter: string): void {
     this.activeFilter = filter;
+
     if (filter === 'ALL') {
       this.dataSource.data = this.allBookings;
     } else {
-      this.dataSource.data = this.allBookings.filter((b) => b.status === filter);
+      this.dataSource.data = this.allBookings.filter(
+        (b) => b.status === filter
+      );
     }
   }
 
@@ -69,7 +72,7 @@ export class BookingList implements OnInit {
     if (!confirm('Naozaj chceš zrušiť túto rezerváciu?')) return;
 
     this.bookingService.cancelBooking(id).subscribe({
-      next: () => this.loadBookings(this.currentUserId),
+      next: () => this.loadBookings(),
       error: (err) => console.error(err),
     });
   }

@@ -18,8 +18,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import sk.umb.hotelmanager.security.JwtAuthentificationFilter;
-import sk.umb.hotelmanager.security.OAuth2SuccessHandler;
 import sk.umb.hotelmanager.service.OAuth2UserService;
+import sk.umb.hotelmanager.security.OAuth2SuccessHandler;
 
 import java.util.List;
 
@@ -36,21 +36,48 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                .cors(Customizer.withDefaults()).csrf(csrf -> csrf.disable())
+                .cors(Customizer.withDefaults())
+                .csrf(csrf -> csrf.disable())
+
+                // 🔥 KLUCOVE: API NESMIE REDIRECTOVAT
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.setStatus(401);
+                            response.setContentType("application/json");
+                            response.getWriter().write("{\"error\":\"Unauthorized\"}");
+                        })
+                )
+
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                        // public endpoints
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/api/hotely", "/api/hotely/**").permitAll()
-                        .requestMatchers("/api/izby","/api/izby/**").permitAll()
-                        .requestMatchers("/api/rezervacie", "/api/rezervacie/**").authenticated()
+                        .requestMatchers("/api/hotely/**").permitAll()
+                        .requestMatchers("/api/izby/**").permitAll()
+
+                        // protected API
+                        .requestMatchers("/api/**").authenticated()
+
+                        // admin only
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
                         .anyRequest().authenticated()
                 )
+
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .oauth2Login(oauth2 -> oauth2.userInfoEndpoint(userInfo -> userInfo.
-                        userService(oAuth2UserService)).successHandler(oAuth2SuccessHandler))
+
+                // OAuth2 ostava, ale uz nie ako fallback pre API
+                .oauth2Login(oauth2 -> oauth2
+                        .userInfoEndpoint(userInfo ->
+                                userInfo.userService(oAuth2UserService)
+                        )
+                        .successHandler(oAuth2SuccessHandler)
+                )
+
+                // JWT FILTER MUSI IST PRVY
                 .addFilterBefore(
                         jwtAuthenticationFilter,
                         UsernamePasswordAuthenticationFilter.class
@@ -76,18 +103,9 @@ public class SecurityConfig {
 
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(
-                List.of("http://localhost:4200")
-        );
-
-        configuration.setAllowedMethods(
-                List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")
-        );
-
-        configuration.setAllowedHeaders(
-                List.of("*")
-        );
-
+        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source =
