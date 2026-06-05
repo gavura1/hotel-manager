@@ -4,16 +4,24 @@ import { AuthService } from './auth.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
-  const token = authService.getToken();
 
-  if (token) {
-    const cloned = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return next(cloned);
+  const token: string | null = authService.getToken();
+
+  // Debug (dočasne – môžeš potom zmazať)
+  console.log('[Interceptor] URL:', req.url);
+  console.log('[Interceptor] Token exists:', !!token);
+
+  // Ak nemáme token, posielame request bez úpravy
+  if (!token) {
+    return next(req);
   }
 
-  return next(req);
+  // Klonovanie requestu s JWT headerom
+  const authReq = req.clone({
+    setHeaders: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return next(authReq);
 };
