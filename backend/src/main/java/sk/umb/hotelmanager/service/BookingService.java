@@ -109,6 +109,7 @@ public class BookingService {
                 .status(booking.getStatus())
                 .createdAt(booking.getCreatedAt())
                 .note(booking.getNote())
+                .hotelName(booking.getRoom().getHotel().getName())
                 .build();
     }
 }
