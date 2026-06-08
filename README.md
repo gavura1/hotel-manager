@@ -1,6 +1,6 @@
 # Hotel Manager
 
-Webová aplikácia na správu hotelov, izieb a rezervácií. Projekt vznikol ako súčasť bakalárskej práce na UMB Banská Bystrica.
+Webová aplikácia na správu hotelov, izieb a rezervácií.
 
 ---
 
