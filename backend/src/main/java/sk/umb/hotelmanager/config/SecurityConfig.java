@@ -53,11 +53,12 @@ public class SecurityConfig {
 
                         // public endpoints
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/api/hotely/**").permitAll()
-                        .requestMatchers("/api/izby/**").permitAll()
+                        .requestMatchers("/api/hotely", "/api/hotely/**").permitAll()
+                        .requestMatchers("/api/izby", "/api/izby/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
 
                         // protected API
-                        .requestMatchers("/api/**").authenticated()
+                        .requestMatchers("/api/rezervacie", "/api/rezervacie/**").authenticated()
 
                         // admin only
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
