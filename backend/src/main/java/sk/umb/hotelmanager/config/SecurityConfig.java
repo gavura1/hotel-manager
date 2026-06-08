@@ -43,6 +43,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/hotely", "/api/hotely/**").permitAll()
                         .requestMatchers("/api/izby","/api/izby/**").permitAll()
                         .requestMatchers("/api/rezervacie", "/api/rezervacie/**").authenticated()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
