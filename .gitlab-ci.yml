@@ -5,13 +5,21 @@ stages:
 backend-build:
   stage: build
   image: maven:3.9.6-eclipse-temurin-21
+  cache:
+    key: maven-cache
+    paths:
+      - .m2/repository
   script:
     - cd backend
-    - mvn clean package -DskipTests
+    - mvn clean package -DskipTests -Dmaven.repo.local=../.m2/repository
 
 frontend-build:
   stage: build
   image: node:20
+  cache:
+    key: npm-cache
+    paths:
+      - frontend/node_modules/
   script:
     - cd frontend
     - npm install

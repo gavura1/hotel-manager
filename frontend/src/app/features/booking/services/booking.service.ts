@@ -6,36 +6,33 @@ import {BookingRequest} from '../models/BookingRequest';
 
 @Injectable({ providedIn: 'root' })
 export class BookingService {
-
   private apiUrl = 'http://localhost:8080/api/rezervacie';
 
   constructor(private http: HttpClient) {}
 
+  getAllBookings(): Observable<Booking[]> {
+    return this.http.get<Booking[]>(this.apiUrl);
+  }
 
   getBookingsByHotel(hotelId: number): Observable<Booking[]> {
     return this.http.get<Booking[]>(`${this.apiUrl}/hotel/${hotelId}`);
   }
 
-
   getBookingsByUser(userId: number): Observable<Booking[]> {
     return this.http.get<Booking[]>(`${this.apiUrl}/user/${userId}`);
   }
-
 
   getBookingById(id: number): Observable<Booking> {
     return this.http.get<Booking>(`${this.apiUrl}/${id}`);
   }
 
-
   createBooking(booking: BookingRequest): Observable<Booking> {
     return this.http.post<Booking>(this.apiUrl, booking);
   }
 
-
   cancelBooking(id: number): Observable<Booking> {
     return this.http.delete<Booking>(`${this.apiUrl}/${id}`);
   }
-
 
   updateBooking(id: number, booking: BookingRequest): Observable<Booking> {
     return this.http.put<Booking>(`${this.apiUrl}/${id}`, booking);

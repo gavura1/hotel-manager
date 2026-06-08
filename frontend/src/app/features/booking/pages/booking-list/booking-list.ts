@@ -25,6 +25,7 @@ export class BookingList implements OnInit {
     'toDate',
     'status',
     'totalPrice',
+    'hotelName',
     'actions',
   ];
   currentUserId: number = 0;
@@ -37,13 +38,23 @@ export class BookingList implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.authService.getMe().subscribe({
-      next: (user: any) => {
-        this.currentUserId = user.id;
-        this.loadBookings(user.id);
-      },
-      error: (err) => console.error(err),
-    });
+    if (this.authService.isAdmin()) {
+      this.bookingService.getAllBookings().subscribe({
+        next: (data) => {
+          this.allBookings = data;
+          this.applyFilter(this.activeFilter);
+        },
+        error: (err) => console.error(err),
+      });
+    } else {
+      this.authService.getMe().subscribe({
+        next: (user: any) => {
+          this.currentUserId = user.id;
+          this.loadBookings(user.id);
+        },
+        error: (err) => console.error(err),
+      });
+    }
   }
 
   loadBookings(userId: number): void {

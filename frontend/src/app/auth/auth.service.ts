@@ -14,7 +14,12 @@ export class AuthService {
     private http: HttpClient,
   ) {}
 
+  // =========================
+  // TOKEN MANAGEMENT
+  // =========================
+
   saveToken(token: string): void {
+    if (!token) return;
     localStorage.setItem(this.tokenKey, token);
   }
 
@@ -22,42 +27,43 @@ export class AuthService {
     return localStorage.getItem(this.tokenKey);
   }
 
-  isLoggedIn(): boolean {
-    return this.getToken() !== null;
-  }
-
   logout(): void {
     localStorage.removeItem(this.tokenKey);
     this.router.navigate(['/login']);
   }
 
-  getMe(): Observable<any> {
-    return this.http.get('http://localhost:8080/auth/me');
+  isLoggedIn(): boolean {
+    return !this.isTokenExpired();
+  }
+
+  // =========================
+  // USER INFO (JWT decode)
+  // =========================
+
+  private decodeToken(): any | null {
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      return JSON.parse(atob(token.split('.')[1]));
+    } catch {
+      return null;
+    }
   }
 
   getCurrentUserEmail(): string | null {
-    const token = this.getToken();
-    if (!token) return null;
-
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload.sub;
-    } catch {
-      return null;
-    }
+    const payload = this.decodeToken();
+    return payload?.sub ?? null;
   }
 
   getCurrentUserRole(): string | null {
-    const token = this.getToken();
-    if (!token) return null;
-
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload.role;
-    } catch {
-      return null;
-    }
+    const payload = this.decodeToken();
+    return payload?.role ?? null;
   }
+
+  // =========================
+  // ROLE HELPERS
+  // =========================
 
   isAdmin(): boolean {
     return this.getCurrentUserRole() === 'ADMIN';
@@ -71,14 +77,22 @@ export class AuthService {
     return this.isAdmin() || this.isManager();
   }
 
+  // =========================
+  // TOKEN VALIDATION
+  // =========================
+
   isTokenExpired(): boolean {
-    const token = this.getToken();
-    if (!token) return true;
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload.exp * 1000 < Date.now();
-    } catch {
-      return true;
-    }
+    const payload = this.decodeToken();
+    if (!payload?.exp) return true;
+
+    return payload.exp * 1000 < Date.now();
+  }
+
+  // =========================
+  // API CALLS
+  // =========================
+
+  getMe(): Observable<any> {
+    return this.http.get('http://localhost:8080/auth/me');
   }
 }

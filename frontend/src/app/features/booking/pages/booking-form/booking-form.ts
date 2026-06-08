@@ -49,10 +49,11 @@ export class BookingForm implements OnInit {
   }
 
   ngOnInit(): void {
-    this.roomService.getRoomsByHotel(1).subscribe({
+    const hotelId = Number(this.route.snapshot.queryParamMap.get('hotelId')) || 1;
+
+    this.roomService.getRoomsByHotel(hotelId).subscribe({
       next: (data) => {
         this.rooms = data;
-
 
         const roomId = this.route.snapshot.queryParamMap.get('roomId');
         if (roomId) {
@@ -68,7 +69,10 @@ export class BookingForm implements OnInit {
 
     this.bookingService.createBooking(this.bookingForm.value).subscribe({
       next: () => this.router.navigate(['/rezervacie']),
-      error: (err: any) => console.error(err),
+      error: (err: any) => {
+        console.error(err);
+        alert('Izba nie je dostupná v danom termíne. Vyberte iný termín.');
+      },
     });
   }
 }

@@ -33,6 +33,10 @@ public class BookingService {
         return bookingRepository.findByUserId(userId).stream().map(this::mapToResponseDto).toList();
     }
 
+    public List<BookingResponseDto> getAllBookings() {
+        return bookingRepository.findAll().stream().map(this::mapToResponseDto).toList();
+    }
+
     public BookingResponseDto getBookingById(Long id) {
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Rezervácia s týmto id sa nenašla"));
@@ -105,6 +109,7 @@ public class BookingService {
                 .status(booking.getStatus())
                 .createdAt(booking.getCreatedAt())
                 .note(booking.getNote())
+                .hotelName(booking.getRoom().getHotel().getName())
                 .build();
     }
 }

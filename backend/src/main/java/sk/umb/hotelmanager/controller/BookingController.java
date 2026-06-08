@@ -3,6 +3,7 @@ package sk.umb.hotelmanager.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import sk.umb.hotelmanager.dto.BookingRequestDto;
@@ -50,5 +51,11 @@ public class BookingController {
     @DeleteMapping("/{id}")
     public ResponseEntity<BookingResponseDto> cancel(@PathVariable Long id) {
         return ResponseEntity.ok(bookingService.cancelBooking(id));
+    }
+
+    @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<BookingResponseDto> getAllBookings() {
+        return bookingService.getAllBookings();
     }
 }
