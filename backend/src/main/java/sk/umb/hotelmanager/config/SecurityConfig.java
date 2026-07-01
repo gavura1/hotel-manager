@@ -69,6 +69,9 @@ public class SecurityConfig {
                         // admin only
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
 
+                        // monitoring
+                        .requestMatchers("/actuator/health", "/actuator/prometheus").permitAll()
+
                         .anyRequest().authenticated()
                 )
 
