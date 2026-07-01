@@ -3,10 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Booking} from '../models/booking.model';
 import {BookingRequest} from '../models/BookingRequest';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class BookingService {
-  private apiUrl = 'http://localhost:8080/api/rezervacie';
+  private apiUrl = `${environment.apiUrl}/api/rezervacie`;
 
   constructor(private http: HttpClient) {}
 
