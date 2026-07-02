@@ -62,3 +62,7 @@ $RECYCLE.BIN/
 .env
 .env.*
 !.env.example
+
+### Kubernetes secrets ###
+kubernetes/*-secret.yaml
+!kubernetes/*-secret.example.yaml
