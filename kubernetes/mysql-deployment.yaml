@@ -4,6 +4,8 @@ metadata:
   name: mysql-deployment
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: mysql
@@ -15,15 +17,24 @@ spec:
       containers:
         - name: mysql
           image: mysql:8.0
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "1Gi"
+              cpu: "1500m"
           envFrom:
             - secretRef:
                 name: mysql-secret
-          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3306
           volumeMounts:
             - name: mysql-storage
               mountPath: /var/lib/mysql
+            - name: mysql-init
+              mountPath: /docker-entrypoint-initdb.d
           livenessProbe:
             exec:
               command:
@@ -33,9 +44,9 @@ spec:
                 - localhost
                 - -uroot
                 - -p$(MYSQL_ROOT_PASSWORD)
-            initialDelaySeconds: 60
+            initialDelaySeconds: 90
             periodSeconds: 10
-            failureThreshold: 3
+            failureThreshold: 6
             timeoutSeconds: 5
           readinessProbe:
             exec:
@@ -46,11 +57,14 @@ spec:
                 - localhost
                 - -uroot
                 - -p$(MYSQL_ROOT_PASSWORD)
-            initialDelaySeconds: 60
+            initialDelaySeconds: 90
             periodSeconds: 10
             failureThreshold: 10
-            timeoutSeconds: 15
+            timeoutSeconds: 5
       volumes:
         - name: mysql-storage
           persistentVolumeClaim:
             claimName: mysql-pvc
+        - name: mysql-init
+          configMap:
+            name: mysql-init-script
