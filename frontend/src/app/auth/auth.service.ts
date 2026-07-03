@@ -94,6 +94,6 @@ export class AuthService {
   // =========================
 
   getMe(): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/auth/me`);
+    return this.http.get(`${environment.authUrl}/auth/me`);
   }
 }
