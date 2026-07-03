@@ -41,13 +41,13 @@ export class LoginComponent {
   }
 
   onGoogleLogin(): void {
-    window.location.href = `${environment.apiUrl}/oauth2/authorization/google`;
-  }
+      window.location.href = `${environment.authUrl}/oauth2/authorization/google`;
+    }
 
-  onSubmit(): void {
-    if (this.loginForm.invalid) return;
+    onSubmit(): void {
+      if (this.loginForm.invalid) return;
 
-    this.http.post<{ token: string }>(`${environment.apiUrl}/auth/login`, this.loginForm.value).subscribe({
+      this.http.post<{ token: string }>(`${environment.authUrl}/auth/login`, this.loginForm.value).subscribe({
       next: (response) => {
         this.authService.saveToken(response.token);
         this.router.navigate(['/hotely']);

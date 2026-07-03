@@ -37,14 +37,14 @@ export class UserList implements OnInit {
   }
 
   loadUsers(): void {
-    this.http.get<any[]>(`${environment.apiUrl}/api/admin/pouzivatelia`).subscribe({
+    this.http.get<any[]>(`${environment.apiUrl}/admin/pouzivatelia`).subscribe({
       next: (data: any[]) => (this.dataSource.data = data),
       error: (err: any) => console.error(err),
     });
   }
 
   loadHotels(): void {
-    this.http.get<any[]>(`${environment.apiUrl}/api/hotely`).subscribe({
+    this.http.get<any[]>(`${environment.apiUrl}/hotely`).subscribe({
       next: (data: any[]) => (this.hotels = data),
       error: (err: any) => console.error(err),
     });
@@ -52,7 +52,7 @@ export class UserList implements OnInit {
 
   updateRole(user: any): void {
     this.http
-      .put(`${environment.apiUrl}/api/admin/pouzivatelia/${user.id}/rola`, { role: user.role })
+      .put(`${environment.apiUrl}/admin/pouzivatelia/${user.id}/rola`, { role: user.role })
       .subscribe({
         next: () => this.loadUsers(),
         error: (err: any) => console.error(err),
@@ -61,7 +61,7 @@ export class UserList implements OnInit {
 
   updateHotels(user: any): void {
     this.http
-      .put(`${environment.apiUrl}/api/admin/pouzivatelia/${user.id}/hotely`, {
+      .put(`${environment.apiUrl}/admin/pouzivatelia/${user.id}/hotely`, {
         hotelIds: user.hotelIds,
       })
       .subscribe({

@@ -10,7 +10,7 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root',
 })
 export class HotelService {
-  private apiUrl = `${environment.apiUrl}/api/hotely`;
+  private apiUrl = `${environment.apiUrl}/hotely`;
 
   constructor(private http: HttpClient) {}
 

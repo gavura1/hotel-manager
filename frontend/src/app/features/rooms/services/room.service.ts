@@ -8,12 +8,12 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root',
 })
 export class RoomService {
-  private apiUrl = `${environment.apiUrl}/api/izby`;
+  private apiUrl = `${environment.apiUrl}/izby`;
 
   constructor(private http: HttpClient) {}
 
   getRoomsByHotel(hotelId: number): Observable<Room[]> {
-    return this.http.get<Room[]>(`http://localhost:8080/api/izby/hotel/${hotelId}`);
+    return this.http.get<Room[]>(`${this.apiUrl}/hotel/${hotelId}`);
   }
 
   getRoomById(id: number): Observable<Room> {
