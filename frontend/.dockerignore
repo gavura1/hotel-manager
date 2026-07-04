@@ -4,4 +4,12 @@ dist/
 .idea/
 .vscode/
 .git/
+.gitignore
 .env
+.env.example
+*.log
+.DS_Store
+Dockerfile
+.dockerignore
+README.md
+npm-debug.log*

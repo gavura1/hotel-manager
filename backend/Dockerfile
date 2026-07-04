@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21-jdk AS build
+FROM eclipse-temurin:21-jdk-alpine AS build
 
 WORKDIR /app
 
@@ -14,11 +14,11 @@ RUN ./mvnw clean package -DskipTests
 
 # runtime
 
-FROM eclipse-temurin:21-jre
+FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
 
-RUN addgroup --system spring && adduser --system --ingroup spring spring
+RUN addgroup -S spring && adduser -S spring -G spring
 
 COPY --from=build /app/target/hotel-manager-0.0.1-SNAPSHOT.jar app.jar
 
