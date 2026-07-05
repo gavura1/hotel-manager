@@ -64,8 +64,8 @@ $RECYCLE.BIN/
 !.env.example
 
 ### Kubernetes secrets ###
-kubernetes/*-secret.yaml
-!kubernetes/*-secret.example.yaml
+kubernetes/*secret*.yaml
+!kubernetes/*.example.yaml
 
 ### Terraform ###
 *.tfstate
