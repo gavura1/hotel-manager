@@ -12,7 +12,7 @@ export const authGuard: CanActivateFn = () => {
     return true;
   }
 
-  // test CI trigger
+  // test CI trigge
   authService.logout();
   router.navigate(['/login']);
   return false;
