@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+data:
+  SPRING_DATASOURCE_URL: "jdbc:mysql://mysql:3306/hotel_manager"
+  GOOGLE_CLIENT_ID: "627125501577-a2tda2bevs1flj9s7lli64b3g2jqua62.apps.googleusercontent.com"
+  OAUTH2_REDIRECT_URI: "http://localhost/api/login/oauth2/code/google"

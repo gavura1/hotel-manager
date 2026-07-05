@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -40,13 +41,13 @@ export class LoginComponent {
   }
 
   onGoogleLogin(): void {
-    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
-  }
+      window.location.href = `${environment.authUrl}/oauth2/authorization/google`;
+    }
 
-  onSubmit(): void {
-    if (this.loginForm.invalid) return;
+    onSubmit(): void {
+      if (this.loginForm.invalid) return;
 
-    this.http.post<{ token: string }>('http://localhost:8080/auth/login', this.loginForm.value).subscribe({
+      this.http.post<{ token: string }>(`${environment.authUrl}/auth/login`, this.loginForm.value).subscribe({
       next: (response) => {
         this.authService.saveToken(response.token);
         this.router.navigate(['/hotely']);

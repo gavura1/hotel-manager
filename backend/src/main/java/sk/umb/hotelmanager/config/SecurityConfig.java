@@ -1,6 +1,7 @@
 package sk.umb.hotelmanager.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -32,6 +33,11 @@ public class SecurityConfig {
     private final OAuth2UserService oAuth2UserService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
+    // toto pole Spring naplní z application.properties (app.cors.allowed-origins),
+    // vie automaticky rozparsovať comma-separated string na List<String>
+    @Value("${app.cors.allowed-origins}")
+    private List<String> allowedOrigins;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -39,7 +45,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
 
-                // 🔥 KLUCOVE: API NESMIE REDIRECTOVAT
+                // API NESMIE REDIRECTOVAT
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint((request, response, authException) -> {
                             response.setStatus(401);
@@ -62,6 +68,9 @@ public class SecurityConfig {
 
                         // admin only
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
+                        // monitoring
+                        .requestMatchers("/actuator/health", "/actuator/prometheus").permitAll()
 
                         .anyRequest().authenticated()
                 )
@@ -104,7 +113,7 @@ public class SecurityConfig {
 
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
+        configuration.setAllowedOrigins(allowedOrigins);
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../../environments/environment';
 
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -36,14 +37,14 @@ export class UserList implements OnInit {
   }
 
   loadUsers(): void {
-    this.http.get<any[]>('http://localhost:8080/api/admin/pouzivatelia').subscribe({
+    this.http.get<any[]>(`${environment.apiUrl}/admin/pouzivatelia`).subscribe({
       next: (data: any[]) => (this.dataSource.data = data),
       error: (err: any) => console.error(err),
     });
   }
 
   loadHotels(): void {
-    this.http.get<any[]>('http://localhost:8080/api/hotely').subscribe({
+    this.http.get<any[]>(`${environment.apiUrl}/hotely`).subscribe({
       next: (data: any[]) => (this.hotels = data),
       error: (err: any) => console.error(err),
     });
@@ -51,7 +52,7 @@ export class UserList implements OnInit {
 
   updateRole(user: any): void {
     this.http
-      .put(`http://localhost:8080/api/admin/pouzivatelia/${user.id}/rola`, { role: user.role })
+      .put(`${environment.apiUrl}/admin/pouzivatelia/${user.id}/rola`, { role: user.role })
       .subscribe({
         next: () => this.loadUsers(),
         error: (err: any) => console.error(err),
@@ -60,7 +61,7 @@ export class UserList implements OnInit {
 
   updateHotels(user: any): void {
     this.http
-      .put(`http://localhost:8080/api/admin/pouzivatelia/${user.id}/hotely`, {
+      .put(`${environment.apiUrl}/admin/pouzivatelia/${user.id}/hotely`, {
         hotelIds: user.hotelIds,
       })
       .subscribe({
