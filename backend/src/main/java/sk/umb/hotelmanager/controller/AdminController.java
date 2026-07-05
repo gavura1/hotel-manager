@@ -16,7 +16,6 @@ import java.util.List;
 @PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 
-    // test CI trigge
     private final AdminService adminService;
 
     @GetMapping("/pouzivatelia")
