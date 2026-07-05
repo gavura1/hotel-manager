@@ -66,3 +66,15 @@ $RECYCLE.BIN/
 ### Kubernetes secrets ###
 kubernetes/*-secret.yaml
 !kubernetes/*-secret.example.yaml
+
+### Terraform ###
+*.tfstate
+*.tfstate.*
+.terraform/
+*.tfvars
+*.tfvars.json
+.terraformrc
+terraform.rc
+crash.log
+crash.*.log
+*.tfplan

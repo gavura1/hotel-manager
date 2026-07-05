@@ -12,7 +12,6 @@ export const authGuard: CanActivateFn = () => {
     return true;
   }
 
-  // test CI trigge
   authService.logout();
   router.navigate(['/login']);
   return false;
