@@ -12,7 +12,7 @@ import sk.umb.hotelmanager.service.AuthService;
 
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
