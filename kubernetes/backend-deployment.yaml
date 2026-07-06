@@ -14,13 +14,13 @@ spec:
     spec:
       containers:
         - name: backend
-          image: hotel-manager-backend:latest
+          image: 344548866144.dkr.ecr.eu-central-1.amazonaws.com/hotel-manager-backend:v2
           envFrom:
             - configMapRef:
                 name: backend-config
             - secretRef:
                 name: backend-secret
-          imagePullPolicy: Never
+          imagePullPolicy: IfNotPresent
           resources:
             requests:
               memory: "512Mi"

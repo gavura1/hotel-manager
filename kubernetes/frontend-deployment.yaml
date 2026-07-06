@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: hotel-manager-frontend:latest
-          imagePullPolicy: Never
+          image: 344548866144.dkr.ecr.eu-central-1.amazonaws.com/hotel-manager-frontend:v2
+          imagePullPolicy: IfNotPresent
           resources:
             requests:
               memory: "64Mi"

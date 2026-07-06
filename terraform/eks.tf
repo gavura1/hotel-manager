@@ -23,6 +23,17 @@ module "eks" {
     }
   }
 
+  addons = {
+    vpc-cni = {
+      before_compute = true
+    }
+    coredns = {}
+    kube-proxy = {}
+    eks-pod-identity-agent = {
+      before_compute = true
+    }
+  }
+
   tags = {
     Environment = "dev"
     Terraform = "true"
