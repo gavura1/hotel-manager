@@ -41,8 +41,8 @@ export class LoginComponent {
   }
 
   onGoogleLogin(): void {
-      window.location.href = `${environment.authUrl}/oauth2/authorization/google`;
-    }
+      window.location.href = `/oauth2/authorization/google`;
+  }
 
     onSubmit(): void {
       if (this.loginForm.invalid) return;
