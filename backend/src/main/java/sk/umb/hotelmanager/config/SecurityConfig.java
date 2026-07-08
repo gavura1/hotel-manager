@@ -18,6 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import sk.umb.hotelmanager.security.HttpSessionOAuth2AuthorizationRequestRepository;
 import sk.umb.hotelmanager.security.JwtAuthentificationFilter;
 import sk.umb.hotelmanager.service.OAuth2UserService;
 import sk.umb.hotelmanager.security.OAuth2SuccessHandler;
@@ -32,6 +33,7 @@ public class SecurityConfig {
     private final JwtAuthentificationFilter jwtAuthenticationFilter;
     private final OAuth2UserService oAuth2UserService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
+    private final HttpSessionOAuth2AuthorizationRequestRepository httpSessionOAuth2AuthorizationRequestRepository;
 
     // toto pole Spring naplní z application.properties (app.cors.allowed-origins),
     // vie automaticky rozparsovať comma-separated string na List<String>
@@ -81,6 +83,8 @@ public class SecurityConfig {
 
                 // OAuth2 ostava, ale uz nie ako fallback pre API
                 .oauth2Login(oauth2 -> oauth2
+                        .authorizationEndpoint(authorization -> authorization
+                                .authorizationRequestRepository(httpSessionOAuth2AuthorizationRequestRepository))
                         .userInfoEndpoint(userInfo ->
                                 userInfo.userService(oAuth2UserService)
                         )
