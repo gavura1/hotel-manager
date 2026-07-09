@@ -43,7 +43,7 @@ export class LoginComponent {
   onGoogleLogin(): void {
       window.location.href = `/oauth2/authorization/google`;
   }
-
+    // comment for commit
     onSubmit(): void {
       if (this.loginForm.invalid) return;
 

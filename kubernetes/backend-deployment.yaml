@@ -3,7 +3,9 @@ kind: Deployment
 metadata:
   name: backend-deployment
 spec:
-  replicas: 2
+  replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: backend
@@ -14,7 +16,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: hotel-manager-backend:v2
+          image: 344548866144.dkr.ecr.eu-central-1.amazonaws.com/hotel-manager-backend:v3
           envFrom:
             - configMapRef:
                 name: backend-config

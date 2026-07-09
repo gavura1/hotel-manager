@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: 344548866144.dkr.ecr.eu-central-1.amazonaws.com/hotel-manager-frontend:v2
+          image: 344548866144.dkr.ecr.eu-central-1.amazonaws.com/hotel-manager-frontend:v3
           imagePullPolicy: IfNotPresent
           resources:
             requests:
