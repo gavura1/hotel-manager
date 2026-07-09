@@ -56,6 +56,9 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v4
+
       - name: Update kubeconfig
         run: aws eks update-kubeconfig --name hotel-manager --region eu-central-1
 
